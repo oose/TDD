@@ -1,14 +1,16 @@
 package de.oose.stattauto.geschaeftslogik;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import de.oose.stattauto.geschaeftslogik.util.DateUtil;
 
-public class ReservierungErzeugenTest {
+public class ReservierungTest {
 
 	private static final LocalDateTime reservierungsbeginn = DateUtil.toDate("23.02.2022 12:10");
 	private static final LocalDateTime reservierungsende = DateUtil.toDate("28.02.2022 15:00");
@@ -55,5 +57,12 @@ public class ReservierungErzeugenTest {
 		assertThrows(NullPointerException.class, 
 				() -> Reservierung.create(reservierungsbeginn, reservierungsende, kfz, null)
 		);
+	}
+
+	@Test
+	@DisplayName("Erzeugte Reservierung ist am Mitglied verfügbar")
+	public void mitgliedHatDieReservierung() {
+		Reservierung reservierung = Reservierung.create(reservierungsbeginn, reservierungsende, kfz, mitglied);
+		assertTrue(mitglied.getReservierungen().contains(reservierung));
 	}
 }

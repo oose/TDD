@@ -31,6 +31,7 @@ public class StattAuto {
 
 	public void addMitglied(Mitglied mitglied) throws MitgliedVorhandenException {
 		Preconditions.checkArgument(mitglied != null);
+
 		Integer mitgliedsnr = mitglied.getMitgliedsnr();
 		if (mitglieder.containsKey(mitgliedsnr)) {
 			throw new MitgliedVorhandenException(mitglieder.get(mitgliedsnr));

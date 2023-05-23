@@ -1,16 +1,12 @@
 package de.oose.stattauto.geschaeftslogik;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StattAutoTest {
 
@@ -35,6 +31,7 @@ public class StattAutoTest {
 	}
 	
 	@Test
+	@DisplayName("Eine neu angelegte Station ist in StattAuto vorhanden")
 	public void stationHinzufuegen() {
 		Collection<Station> stationen = stattAuto.getStationen();
 		assertNotNull(stationen);
@@ -45,9 +42,11 @@ public class StattAutoTest {
 		stationen = stattAuto.getStationen();
 		assertNotNull(stationen);
 		assertEquals(2, stationen.size());
+		assertTrue(stationen.contains(station));
 	}
 	
 	@Test
+	@DisplayName("NULL als Station wird nicht akzeptiert")
 	public void nullStationHinzufuegenNichtErlaubt() {
 		assertThrows(IllegalArgumentException.class, 
 			() -> stattAuto.addStation(null)
@@ -55,6 +54,7 @@ public class StattAutoTest {
 	}
 	
 	@Test
+	@DisplayName("NULL als KFZ wird nicht akzeptiert")
 	public void nullKfzHinzufuegenNichtErlaubt() {
 		assertThrows(IllegalArgumentException.class, 
 			() -> stattAuto.addKfz(null)
@@ -62,15 +62,16 @@ public class StattAutoTest {
 	}
 	
 	@Test
+	@DisplayName("Ein neues Mitglied wird anhand seiner Mitgliedsnummer gefunden")
 	public void mitgliedHinzufuegen() throws MitgliedVorhandenException {
 		stattAuto.addMitglied(peter);
-		Mitglied mitglied = stattAuto.getMitglied(234);
+		Mitglied mitglied = stattAuto.getMitglied(MITGLIEDSNR);
 		assertNotNull(mitglied);
-		assertSame(peter, mitglied);
-		assertNull(stattAuto.getMitglied(345));
+		assertEquals(peter, mitglied);
 	}
 
 	@Test
+	@DisplayName("NULL als Mitglied wird nichz akzeptiert")
 	public void nullMitgliedHinzufuegenNichtErlaubt() throws MitgliedVorhandenException {
 		assertThrows(IllegalArgumentException.class, 
 			() -> stattAuto.addMitglied(null)
@@ -78,13 +79,11 @@ public class StattAutoTest {
 	}
 
 	@Test
+	@DisplayName("Ein neues Mitglied mit bereits vorhandener Mitgliedsnummer wird nicht akzeptiert")
 	public void mitgliedMitNummerVorhanden() throws MitgliedVorhandenException {
 		stattAuto.addMitglied(peter);
-		try {
-			stattAuto.addMitglied(new Mitglied("Zweiter", peter.getMitgliedsnr()));
-			fail();
-		} catch(MitgliedVorhandenException expected) {
-			assertSame(peter, expected.getMitglied());
-		}
+
+		MitgliedVorhandenException exception = assertThrows(MitgliedVorhandenException.class, () -> stattAuto.addMitglied(new Mitglied("Zweiter", peter.getMitgliedsnr())));
+		assertEquals(peter, exception.getMitglied());
 	}
 }

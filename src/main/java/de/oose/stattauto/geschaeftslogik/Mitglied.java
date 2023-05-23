@@ -17,8 +17,8 @@ public class Mitglied {
 	
 	public Mitglied(String name, int mitgliedsnr) {
 		Preconditions.checkArgument(StringUtils.isNotEmpty(name));
-		this.name = name;
 		Preconditions.checkArgument(mitgliedsnr > 0, "mitgliedsnr > 0");
+		this.name = name;
 		this.mitgliedsnr = mitgliedsnr;
 	}
 

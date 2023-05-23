@@ -1,5 +1,6 @@
 package de.oose.stattauto.geschaeftslogik;
 
+import com.google.common.base.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Preconditions;
@@ -16,4 +17,5 @@ public class Station {
 	public String getName() {
 		return name;
 	}
+
 }

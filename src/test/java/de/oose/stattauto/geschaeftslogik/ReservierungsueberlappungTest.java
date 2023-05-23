@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import de.oose.stattauto.geschaeftslogik.util.DateUtil;
@@ -35,26 +36,31 @@ public class ReservierungsueberlappungTest {
 	}
 
 	@Test
+	@DisplayName("Identische Zeiträume überlappen")
 	public void identischerZeitraumUeberlappt() {
 		assertTrue(reservierung.ueberlappt(reservierungsbeginn, reservierungsende));
 	}
 	
 	@Test
+	@DisplayName("Ein Zeitraum innerhalb des Reservierungszeitraums überlappt")
 	public void komplettInnerhalbUeberlappt() {
 		assertTrue(reservierung.ueberlappt(kurzHinterBeginn, kurzVorEnde));
 	}
 	
 	@Test
+	@DisplayName("Eine Reservierungsanfrage mit dem Beginn einer vorhandenen Reservierung als Ende überlappt nicht")
 	public void vorneAngrenzendIdentischerZeitpunktUeberlapptNicht() {
 		assertFalse(reservierung.ueberlappt(vorher, reservierungsbeginn));
 	}
 	
 	@Test
+	@DisplayName("Eine Reservierungsanfrage mit dem Ende einer vorhandenen Reservierung als Beginn überlappt nicht")
 	public void hintenAngrenzendIdentischerZeitpunktUeberlapptNicht() {
 		assertFalse(reservierung.ueberlappt(reservierungsende, hinterher));
 	}
 	
 	@Test
+	@DisplayName("Eine komplett überspannende Reservierungsanfrage überlappt eine vorhandene")
 	public void komplettUeberspannendUeberlappt() {
 		assertTrue(reservierung.ueberlappt(vorher, hinterher));
 	}
@@ -103,8 +109,4 @@ public class ReservierungsueberlappungTest {
 		assertFalse(kfz.istFrei(hinterher, langeHinterher));
 	}
 	
-	@Test
-	public void mitgliedHatDieReservierung() {
-		assertTrue(mitglied.getReservierungen().contains(reservierung));
-	}
 }
