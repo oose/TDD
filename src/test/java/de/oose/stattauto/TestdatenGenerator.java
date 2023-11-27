@@ -49,9 +49,9 @@ public class TestdatenGenerator {
 
 		stattAuto.addKfz(new Kfz("Golf", tripptrapp));
 		
-		Reservierung.create(DateUtil.toDate("23.04.2022"), DateUtil.toDate("25.04.2022"), golfHbf, peter);
-		Reservierung.create(DateUtil.toDate("29.04.2022"), DateUtil.toDate("02.05.2022"), opelHbf, peter);
+		Reservierung.create(DateUtil.toDate("23.04.2022 13:00"), DateUtil.toDate("25.04.2022 15:00"), golfHbf, peter);
+		Reservierung.create(DateUtil.toDate("29.04.2022 10:00"), DateUtil.toDate("02.05.2022 18:00"), opelHbf, peter);
 		
-		Reservierung.create(DateUtil.toDate("04.05.2022"), DateUtil.toDate("04.05.2022"), toyotaFlugh1, sonja);
+		Reservierung.create(DateUtil.toDate("04.05.2022 09:00"), DateUtil.toDate("04.05.2022 20:00"), toyotaFlugh1, sonja);
 	}
 }
